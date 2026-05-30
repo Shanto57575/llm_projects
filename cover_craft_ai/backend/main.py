@@ -90,7 +90,7 @@ async def generate_cover_letter(
         if resume_length < 100 or resume_length > 20000:
             raise HTTPException(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-                detail=f"Extracted resume text length ({resume_length}) must be between 100 and 20000 characters."
+                detail=f"Extracted resume text length ({resume_length}), but resume length must be between 100 and 20000 characters."
             )
         if len(extracted_text.split()) < 50:
             raise HTTPException(
