@@ -608,12 +608,11 @@ export default function CoverCraftAI() {
                             >
                                 {isSubmitting
                                     ? <><Loader2 className="w-4 h-4 animate-spin" />Analyzing your profile…</>
-                                    : <><Sparkles className="w-4 h-4" />Generate Cover Letter<ChevronRight className="w-4 h-4 ml-auto" /></>
+                                    : <><Sparkles className="w-4 h-4" />Generate Cover Letter</>
                                 }
                             </button>
-                            <p className="text-slate-600 text-xs text-center">
-                                A cover letter is only generated if our AI determines you meet the role's requirements.{" "}
-                                <a href="/terms" className="text-slate-500 hover:text-slate-300 underline underline-offset-2 transition-colors">Terms</a> apply.
+                            <p className="text-slate-500 text-xs text-center">
+                                A cover letter is only generated if our AI determines you meet the role's requirements.
                             </p>
                         </div>
                     </div>

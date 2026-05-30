@@ -4,12 +4,12 @@ import Navbar from "./components/shared/Navbar";
 
 export default function App() {
   return (
-    <>
+    <div className="font-serif">
       <Navbar />
       <main>
         <Outlet />
       </main>
       <Footer />
-    </>
+    </div>
   )
 }
