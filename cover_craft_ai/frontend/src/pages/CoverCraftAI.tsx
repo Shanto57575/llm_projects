@@ -398,8 +398,10 @@ export default function CoverCraftAI() {
             formData.append("resume", uploadedFile.file);
             formData.append("job_description", data.jobDescription);
             const response = await axiosInstance.post<ApiResponse>("/generate-cover-letter", formData);
+            console.log("response==>", response)
             setResult(response.data);
         } catch (err) {
+            console.log("err", err)
             if (axios.isAxiosError(err)) {
                 const detail = err.response?.data?.detail;
 
@@ -424,7 +426,6 @@ export default function CoverCraftAI() {
         return "text-emerald-400";
     };
 
-    // ── Show results after submission ──
     if (result) return <ResultView result={result} onReset={handleReset} />;
 
     // ── Form ──

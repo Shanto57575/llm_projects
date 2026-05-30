@@ -14,11 +14,8 @@ from prompt_store import (
 )
 from logger import logger
 import io, pypdf, docx2txt
-
 load_dotenv()
-
 app = FastAPI()
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173", "https://cover-craft-ai.netlify.app"],
@@ -26,29 +23,23 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"]
 )
-
 analysis_model = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash",
     temperature=0
 )
-
 cover_letter_model = ChatGroq(
     model="llama-3.3-70b-versatile",
     temperature=0.7
 )
-
 analysis_chain = (
     analysis_prompt
     | analysis_model.with_structured_output(AnalysisResponse)
 )
-
 cover_letter_chain = (
     cover_letter_generator_prompt
     | cover_letter_model
 )
-
 ALLOWED_EXTENSIONS = {".pdf", ".docx", ".doc"}
-
 @app.post(
     "/api/v1/generate-cover-letter",
     response_model=GenerateCoverLetterResponse
@@ -57,8 +48,6 @@ async def generate_cover_letter(
     job_description: str = Form(..., min_length=100, max_length=10000),
     resume: UploadFile = File(...)
     ):
-    print("job_description", job_description)
-    print("resume", resume)
     
     logger.info("Cover letter generation request received")
         
@@ -68,7 +57,11 @@ async def generate_cover_letter(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail="Job description must contain at least 30 words."
         )
-        
+    if not resume.filename:
+        raise HTTPException(
+            status_code=400,
+            detail="No file uploaded."
+        )
     filename = resume.filename.lower()
     if not any(filename.endswith(ext) for ext in ALLOWED_EXTENSIONS):
             raise HTTPException(
@@ -89,12 +82,16 @@ async def generate_cover_letter(
             extracted_text = docx2txt.process(docx_file)
         
         resume_length = len(extracted_text)
+        if resume_length == 0:
+            raise HTTPException(
+                status_code=422,
+                detail="Could not extract text from the resume. Please upload a text-based PDF or DOCX file."
+            )
         if resume_length < 100 or resume_length > 20000:
             raise HTTPException(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                 detail=f"Extracted resume text length ({resume_length}) must be between 100 and 20000 characters."
             )
-
         if len(extracted_text.split()) < 50:
             raise HTTPException(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
@@ -113,7 +110,7 @@ async def generate_cover_letter(
         if qualification_analysis.is_qualified:
             cover_letter = cover_letter_chain.invoke({
                 "job_description": job_description,
-                "resume": resume,
+                "resume": extracted_text,
                 "strengths": qualification_analysis.strengths,
                 "weaknesses": qualification_analysis.weaknesses,
             })
@@ -131,15 +128,15 @@ async def generate_cover_letter(
             assessment=qualification_analysis,
             cover_letter=None
         )
+    except HTTPException:
+        raise
     except Exception as e:
-        logger.exception(
-            f"Unexpected error while generating cover letter: {str(e)}"
-        )
+        logger.exception(str(e))
         raise HTTPException(
             status_code=500,
-            detail="Internal server error while generating cover letter."
+            detail=str(e)
         )
-
+    
 @app.get("/", include_in_schema=False)
 async def root():
     logger.info("Health check endpoint called")
