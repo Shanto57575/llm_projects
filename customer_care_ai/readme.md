@@ -96,9 +96,9 @@ Implemented summary memory in this project.
 
 Add a screenshot of the Streamlit interface here.
 
-```markdown
-![Application Screenshot](./screenshots/api_ui.png)
-```
+## App UI
+
+![Application Screenshot](./screenshots/app_ui.png)
 
 ## Key Takeaways
 
