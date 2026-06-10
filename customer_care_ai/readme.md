@@ -13,6 +13,10 @@ The goal of this project was not to build a production-ready customer support pl
 * Context-aware responses using memory
 * Streamlit interface for quick experimentation
 
+## App UI
+
+![Application Screenshot](./screenshots/app_ui.png)
+
 ## Tech Stack
 
 * Python
@@ -91,14 +95,6 @@ Implemented summary memory in this project.
 ├── requirements.txt
 └── README.md
 ```
-
-## Screenshot
-
-Add a screenshot of the Streamlit interface here.
-
-## App UI
-
-![Application Screenshot](./screenshots/app_ui.png)
 
 ## Key Takeaways
 
