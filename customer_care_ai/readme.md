@@ -85,17 +85,6 @@ Learned multiple approaches for handling long conversations:
 
 Implemented summary memory in this project.
 
-## Project Structure
-
-```text
-.
-├── app.py
-├── memory.py
-├── .env
-├── requirements.txt
-└── README.md
-```
-
 ## Key Takeaways
 
 This project helped me understand:
