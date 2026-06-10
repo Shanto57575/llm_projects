@@ -1,0 +1,10 @@
+fastapi[standard]
+
+langchain
+langsmith
+
+langchain-google-genai
+langchain-groq
+langchain-mistralai
+
+python-dotenv
