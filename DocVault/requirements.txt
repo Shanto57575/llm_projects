@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+python-dotenv
+langchain
+langchain-mistralai
+langchain-huggingface
+langchain-community
+langchain-qdrant
+langchain-text-splitters
+qdrant-client
+pypdf
+sentence-transformers
+streamlit
+requests
