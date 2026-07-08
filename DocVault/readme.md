@@ -25,7 +25,8 @@ A RAG-powered PDF Question Answering system. Upload PDFs, index them into a vect
 ### 1. Clone & create a virtual environment
 
 ```bash
-git clone https://github.com/your-username/docvault.git
+git clone https://github.com/Shanto57575/llm_projects
+
 cd docvault
 
 python -m venv venv
