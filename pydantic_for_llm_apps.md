@@ -1043,17 +1043,3 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env")
     api_key: str
 ```
-
----
-
-## Suggested Learning Path Recap
-
-1. **Part 1–2**: Build and validate flat models; understand coercion vs. strictness, `Field()`, defaults, aliases.
-2. **Part 3**: Nest models, use enums/`Literal`, and — importantly — master discriminated unions before you touch any agent framework.
-3. **Part 4**: Write field- and model-level validators; this is where you'll spend real time cleaning messy LLM output.
-4. **Part 5**: This is the payoff section — connect models to OpenAI/Anthropic/instructor structured outputs. Re-read this part once you're actually wiring up a provider.
-5. **Part 6–7**: See the same modeling skill reused across FastAPI (your API layer) and LangChain/LangGraph (your orchestration layer) — notice it's *the same models*, not different tools.
-6. **Part 8**: Set up `pydantic-settings` early in any new project — it pays for itself the first time someone forgets to set an env var.
-7. **Part 9–10**: Reach for these as needed — `TypeAdapter`, generics, `computed_field`, strict mode, and the common-mistakes list are your reference material once you're building for real.
-
-You now have what you need to design, validate, and debug the data layer of a production LLM application without another introductory Pydantic tutorial.
